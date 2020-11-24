@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Card, CardDeck, Jumbotron } from "react-bootstrap";
-import { GetCourse } from "../../actions/courseActions";
+import { GetEnrollCourse } from "../../actions/courseActions";
 import { logout } from "../../actions/userActions";
 
 const KursusSaya = ({ history }) => {
@@ -10,31 +10,32 @@ const KursusSaya = ({ history }) => {
   const userLogin = useSelector((state) => state.userLogin);
   const { token } = userLogin;
 
+  const userCourseData = useSelector((state) => state.userCourseData);
+  const { enrolls } = userCourseData;
+
   useEffect(() => {
     if (token) {
-      dispatch(GetCourse());
+      dispatch(GetEnrollCourse());
     } else {
       dispatch(logout());
       history.push("/login")
     }
   }, [dispatch, history, token])
 
-  const courseData = useSelector((state) => state.courseData);
-  const { courses } = courseData;
-
   return (
     <div>
-      <Jumbotron className="px-4 py-4">
+      <Jumbotron className="mx-4 my-4 px-4 py-4">
         <CardDeck>
-          {courses.map((product) => (
+          {enrolls.map((product) => (
             <React.Fragment>
               <Card key={product._id}>
-                <Card.Body>
-                  <Card.Title>{product.NamaKursus}</Card.Title>
-                  <Card.Text>{product.IDTopik}</Card.Text>
-                  <Card.Text>{product.PencapaianKursus}</Card.Text>
-                  <Card.Text>{product.FiturKursus}</Card.Text>
-                </Card.Body>
+                  {product.enrollment.map((course) => (
+                    <Card.Body>
+                      <Card.Title>{course.NamaKursus}</Card.Title>
+                      <Card.Text>{course.PencapaianKursus}</Card.Text>
+                      <Card.Text>{course.FiturKursus}</Card.Text>
+                    </Card.Body>
+                  ))}
                 <Card.Footer>{product.HargaKursus}</Card.Footer>
               </Card>
             </React.Fragment>

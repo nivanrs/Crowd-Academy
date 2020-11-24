@@ -1,23 +1,25 @@
 import axios from "axios";
 import {
-    USER_COURSE_GET_REQUEST,
-    USER_COURSE_GET_SUCCESS,
-    USER_COURSE_GET_FAIL,
+    ENROLL_COURSE_GET_REQUEST,
+    ENROLL_COURSE_GET_SUCCESS,
+    ENROLL_COURSE_GET_FAIL,
     USER_COURSE_POST_REQUEST,
     USER_COURSE_POST_SUCCESS,
     USER_COURSE_POST_FAIL,
 } from "../constants/courseConstants";
 import { logout } from './userActions';
 
-export const GetCourse = () => async (dispatch, getState) => {
+export const GetEnrollCourse = () => async (dispatch, getState) => {
     try {
         dispatch({
-            type: USER_COURSE_GET_REQUEST,
+            type: ENROLL_COURSE_GET_REQUEST,
         })
 
         const { 
             userLogin: { token },
         } = getState()
+
+        const userID = localStorage.getItem("userID");
 
         const config = {
             headers: {
@@ -25,12 +27,13 @@ export const GetCourse = () => async (dispatch, getState) => {
                 Authorization : `${token}`,
             },
         };
-        const { data } = await axios.get("http://localhost:9000/api/course/", config);
+        const { data } = await axios.get(`http://localhost:9000/api/course/enroll/${userID}`, config);
 
         dispatch({
-            type: USER_COURSE_GET_SUCCESS,
+            type: ENROLL_COURSE_GET_SUCCESS,
             payload: data,
         })
+
     } catch (error) {
         const message =
             error.response && error.response.data.message
@@ -40,7 +43,7 @@ export const GetCourse = () => async (dispatch, getState) => {
             dispatch(logout())
         }
         dispatch({
-            type: USER_COURSE_GET_FAIL,
+            type: ENROLL_COURSE_GET_FAIL,
             payload: message,
         })
     }

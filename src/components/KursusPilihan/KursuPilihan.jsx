@@ -1,51 +1,89 @@
-import { CardDeck } from "react-bootstrap";
-import { Card } from "react-bootstrap";
-import invest from "../../assets/course-invest.png";
-import finance from "../../assets/course-personal-finance.jpg";
-import report from "../../assets/course-financial-report.png";
-import accounting from "../../assets/course-accounting.jpg";
+import React, { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { useHistory } from "react-router-dom";
+import { Card, CardDeck, Jumbotron, Button, ButtonGroup } from "react-bootstrap";
+import { LinkContainer } from "react-router-bootstrap";
+import { GetCourse, EnrollCourse } from "../../actions/menuActions";
+import Swal from "sweetalert2";
+import withReactContent from "sweetalert2-react-content";
 
-export default function KursusPilihan(props) {
+const MySwal = withReactContent(Swal);
+
+const KursusPilihan = () => {
+  let history = useHistory();
+  const dispatch = useDispatch();
+
+  const menuCourseData = useSelector((state) => state.menuCourseData);
+  const enrollCourse = useSelector((state) => state.enrollCourse);
+  const { courses } = menuCourseData;
+  const { status } = enrollCourse;
+
+  useEffect(() => {
+    dispatch(GetCourse());
+  }, [dispatch])
+
+  useEffect(() => {
+    async function getEnroll() {
+      if (status === "success") {
+        MySwal.fire({
+          title: "Sukses",
+          icon: "success",
+          text: "Enroll Berhasil",
+        }).then((result) => {
+          if (result.isConfirmed) {
+            history.push("/course");
+          }
+        });
+      }
+    }
+    getEnroll();
+  }, [history, status]);
+
+  const enrollHandler = (id) => {
+    MySwal.fire({
+      icon: "question",
+      title: 'Yakin Mengikuti Kursus?',
+      showCancelButton: true,
+      confirmButtonText: `Ikuti`,
+      cancelButtonText: `Batal`,
+    }).then((result) => {
+      if (result.isConfirmed) {
+        dispatch(EnrollCourse(id));
+      }
+    })
+  }
+
   return (
-    <CardDeck>
-      <Card>
-        <Card.Img className="rounded mb-0" variant="top" src={invest} />
-        <Card.Body>
-          <Card.Title>Investasi untuk Pemula</Card.Title>
-          <Card.Text>
-            Kursus Investasi untuk pemula. Anda akan mendapatkan cuan banyak
-            jika mengikuti kursus ini.
-          </Card.Text>
-        </Card.Body>
-      </Card>
-      <Card>
-        <Card.Img variant="top" src={finance} />
-        <Card.Body>
-          <Card.Title>Perencanaan Keuangan untuk Pemula</Card.Title>
-          <Card.Text>
-            Kursus perencanaan keuangan agar anda dapat mengatur keuangan dengan
-            baik.
-          </Card.Text>
-        </Card.Body>
-      </Card>
-      <Card>
-        <Card.Img variant="top" src={report} />
-        <Card.Body>
-          <Card.Title>Paham Laporan Keuangan</Card.Title>
-          <Card.Text>
-            Memhami Laporan Keuangan Kuartalan untuk investasi jangka panjang.
-          </Card.Text>
-        </Card.Body>
-      </Card>
-      <Card>
-        <Card.Img variant="top" src={accounting} />
-        <Card.Body>
-          <Card.Title>Belajar Akuntansi dengan Mudah</Card.Title>
-          <Card.Text>
-            Kursus akuntansi untuk persiapan sertifikasi akuntanssi.
-          </Card.Text>
-        </Card.Body>
-      </Card>
-    </CardDeck>
+    <div>
+      <Jumbotron className="px-4 py-4">
+        <CardDeck>
+          {courses.map((product) => (
+            <React.Fragment>
+              <Card key={product._id}>
+                <Card.Body>
+                  <Card.Title>{product.NamaKursus}</Card.Title>
+                  <Card.Text>{product.IDTopik}</Card.Text>
+                  <Card.Text>{product.FiturKursus}</Card.Text>
+                </Card.Body>
+                <Card.Footer>
+                  <ButtonGroup>
+                    <LinkContainer to={`/coursedetail/${product._id}`}>
+                      <Button variant="secondary" type="submit">
+                        Detail
+                      </Button>
+                    </LinkContainer>
+                    <Button variant="success" type="submit" onClick={() => enrollHandler(product._id)}>
+                      Ikuti
+                    </Button>
+                  </ButtonGroup>
+                </Card.Footer>
+              </Card>
+            </React.Fragment>
+          ))}
+        </CardDeck>
+      </Jumbotron>
+    </div>
   );
 }
+
+export default KursusPilihan;

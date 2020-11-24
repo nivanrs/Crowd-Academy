@@ -1,12 +1,12 @@
-import React from "react";
+import React from 'react'
 import {
   BrowserRouter as Router,
   Route,
   Switch,
   Redirect,
-} from "react-router-dom";
-import { useSelector } from "react-redux";
-import "./App.css";
+} from 'react-router-dom'
+import { useSelector } from 'react-redux'
+import './App.css'
 
 import ProtectedRoute from "./components/ProtectedRoute";
 import Header from "./components/Header/Header";
@@ -15,10 +15,11 @@ import Login from "./components/Login/Login";
 import Footer from "./components/Footer/Footer";
 import Register from "./components/Register/Register";
 import KursusSaya from "./components/KursusSaya/KursusSaya";
+import DetailKursus from "./components/DetailKursus/DetailKursus";
 
 const App = () => {
-  const userLogin = useSelector(state => state.userLogin);
-  const { token } = userLogin;
+  const userLogin = useSelector((state) => state.userLogin)
+  const { token } = userLogin
 
   return (
     <Router>
@@ -27,6 +28,7 @@ const App = () => {
         <Route exact path="/" component={Main}></Route>
         <Route exact path="/register" component={Register}></Route>
         <Route exact path="/login" component={Login}></Route>
+        <Route exact path="/coursedetail/:idcourse" component={DetailKursus}></Route>
         <Route exact path="/">
           {!!token ? (
             <Redirect to="/course" />
@@ -37,16 +39,16 @@ const App = () => {
         </Route>
         <ProtectedRoute
           exact
-          path="/course"
+          path='/course'
           component={KursusSaya}
         ></ProtectedRoute>
       </Switch>
       <Footer />
     </Router>
-  );
-};
+  )
+}
 
-export default App;
+export default App
 
 // export default function App() {
 //   return (

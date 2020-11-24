@@ -14,12 +14,10 @@ const Login = ({ history }) => {
   const dispatch = useDispatch();
 
   const userLogin = useSelector((state) => state.userLogin);
-  const userAccount = useSelector((state) => state.userAccount);
-  const { error, token } = userLogin;
-  const { account } = userAccount;
+  const { status, error, token, account } = userLogin;
 
   useEffect(() => {
-    async function fetchData(){
+    async function getLogin() {
       if (token) {
         MySwal.fire({
           title: "Sukses",
@@ -27,13 +25,28 @@ const Login = ({ history }) => {
           text: "Login Berhasil",
         }).then((result) => {
           if (result.isConfirmed) {
-            history.push("/course");
+            history.push("/");
           }
         });
       }
     }
-    fetchData();
+    getLogin();
   }, [history, token, account]);
+
+  useEffect(() => {
+    if (status && status === "unverified" ) {
+      MySwal.fire({
+        title: "Gagal",
+        icon: "error",
+        text: "Login Gagal. Silahkan Verifikasi Akun Terlebih Dahulu",
+      }).then((result) => {
+        if (result.isConfirmed) {
+          setEmail("");
+          setPassword("");
+        }
+      });
+    }
+  }, [status]);
 
   useEffect(() => {
     if (error && error !== undefined) {

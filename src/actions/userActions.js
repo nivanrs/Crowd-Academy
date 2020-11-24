@@ -1,6 +1,7 @@
 import axios from "axios";
 import {
   USER_LOGIN_FAIL,
+  USER_LOGIN_UNVERIFIED,
   USER_LOGIN_REQUEST,
   USER_LOGIN_SUCCESS,
   USER_LOGOUT,
@@ -31,6 +32,12 @@ export const login = (email, password) => async (dispatch) => {
       payload: data.token,
     });
 
+    dispatch({
+      type: USER_LOGIN_UNVERIFIED,
+      payload: data.status,
+    });
+
+    localStorage.setItem("userID", data.userID);
     localStorage.setItem("token", data.token);
   } catch (error) {
     dispatch({
@@ -91,6 +98,7 @@ export const register = (FirstName, LastName, email, password, role, isVerified)
 };
 
 export const logout = () => (dispatch) => {
+  localStorage.removeItem("userID");
   localStorage.removeItem("token");
   localStorage.removeItem("account");
   dispatch({
