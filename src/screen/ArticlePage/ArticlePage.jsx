@@ -28,17 +28,17 @@ function Penulis() {
 }
 
 function WaktuRilis() {
-  return (
-    <div>
-      <p>Waktu:</p>
-    </div>
-  )
+  return <p>Waktu:</p>
 }
 function IsiArtikel() {
   return (
     <div>
-      <h5>Silabus:</h5>
-      <p> - Fundamental investasi</p>
+      <p>
+        Lorem ipsum dolor sit amet consectetur adipisicing elit. Ex, cupiditate!
+        Voluptates enim sapiente quisquam ab voluptate officiis mollitia
+        asperiores unde doloribus eos tempora deleniti eum, optio reprehenderit
+        eligendi quia dolores!
+      </p>
     </div>
   )
 }
