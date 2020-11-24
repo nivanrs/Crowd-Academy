@@ -66,7 +66,7 @@ const Header = () => {
               style={{ color: "#1A73A3" }}
             >
               <NavDropdown.Item href="/course">
-                Investasi
+                Kursus Saya
               </NavDropdown.Item>
             </NavDropdown>
             <NavDropdown

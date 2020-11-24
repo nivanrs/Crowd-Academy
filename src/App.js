@@ -15,6 +15,7 @@ import Login from "./components/Login/Login";
 import Footer from "./components/Footer/Footer";
 import Register from "./components/Register/Register";
 import KursusSaya from "./components/KursusSaya/KursusSaya";
+import DetailKursus from "./components/DetailKursus/DetailKursus";
 
 const App = () => {
   const userLogin = useSelector(state => state.userLogin);
@@ -27,6 +28,7 @@ const App = () => {
         <Route exact path="/" component={Main}></Route>
         <Route exact path="/register" component={Register}></Route>
         <Route exact path="/login" component={Login}></Route>
+        <Route exact path="/coursedetail/:idcourse" component={DetailKursus}></Route>
         <Route exact path="/">
           {!!token ? (
             <Redirect to="/course" />

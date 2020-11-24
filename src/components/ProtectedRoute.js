@@ -9,7 +9,7 @@ const ProtectedRoute = (props) => {
   return !!token ? (
     <Route {...props} />
   ) : (
-    <Redirect to={{ pathname: "/login" }} />
+    <Redirect to={{ pathname: "/course" }} />
   );
 };
 

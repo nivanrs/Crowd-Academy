@@ -1,6 +1,7 @@
 import axios from "axios";
 import {
   USER_LOGIN_FAIL,
+  USER_LOGIN_UNVERIFIED,
   USER_LOGIN_REQUEST,
   USER_LOGIN_SUCCESS,
   USER_LOGOUT,
@@ -24,13 +25,19 @@ export const login = (email, password) => async (dispatch) => {
       },
     };
 
-    const { data } = await axios.post("http://3.82.93.151:9000/api/login", { email, password }, config);
+    const { data } = await axios.post("http://localhost:9000/api/login", { email, password }, config);
 
     dispatch({
       type: USER_LOGIN_SUCCESS,
       payload: data.token,
     });
 
+    dispatch({
+      type: USER_LOGIN_UNVERIFIED,
+      payload: data.status,
+    });
+
+    localStorage.setItem("userID", data.userID);
     localStorage.setItem("token", data.token);
   } catch (error) {
     dispatch({
@@ -74,7 +81,7 @@ export const register = (FirstName, LastName, email, password, role, isVerified)
       },
     };
 
-    const { data } = await axios.post("http://3.82.93.151:9000/api/registration/add", { FirstName, LastName, email, password, role, isVerified }, config);
+    const { data } = await axios.post("http://localhost:9000/api/registration/add", { FirstName, LastName, email, password, role, isVerified }, config);
 
     dispatch({
       type: USER_REGISTER_SUCCESS,
@@ -91,6 +98,7 @@ export const register = (FirstName, LastName, email, password, role, isVerified)
 };
 
 export const logout = () => (dispatch) => {
+  localStorage.removeItem("userID");
   localStorage.removeItem("token");
   localStorage.removeItem("account");
   dispatch({

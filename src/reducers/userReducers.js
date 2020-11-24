@@ -1,5 +1,6 @@
 import {
     USER_LOGIN_FAIL,
+    USER_LOGIN_UNVERIFIED,
     USER_LOGIN_REQUEST,
     USER_LOGIN_SUCCESS,
     USER_LOGOUT,
@@ -18,6 +19,8 @@ export const userLoginReducer = (state = {}, action) => {
       return { loading: true };
     case USER_LOGIN_SUCCESS:
       return { loading: false, token: action.payload };
+    case USER_LOGIN_UNVERIFIED:
+      return { loading: false, status: action.payload };
     case USER_LOGIN_FAIL:
       return { loading: false, error: action.payload };
     case USER_LOGOUT:
