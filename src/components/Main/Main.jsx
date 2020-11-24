@@ -1,23 +1,22 @@
-import React from "react";
+import React from 'react'
 //import axios from "axios";
-import { Container } from "react-bootstrap";
+import { Container } from 'react-bootstrap'
 //import { Card } from "react-bootstrap";
 //import { Form } from "react-bootstrap";
 //import { Row, Col } from "react-bootstrap";
 //import { Button } from "react-bootstrap";
-import Banner from "../Jumbotron/Jumbotron";
-import KursusPilihan from "../KursusPilihan/KursuPilihan";
+import Banner from '../Jumbotron/Jumbotron'
+import KursusPilihan from '../KursusPilihan/KursuPilihan'
 
 export default class Main extends React.Component {
-    render() {
-        return (
-            <div className="Home">
-              <Banner />
-              <Container>
-                <h2 style={{textAlign:"left"}} >Kursus Pilihan</h2>
-                <KursusPilihan/>
-              </Container>
-            </div>
-        )
-    }
+  render() {
+    return (
+      <div className='Home'>
+        <Banner />
+        <Container>
+          <KursusPilihan />
+        </Container>
+      </div>
+    )
+  }
 }
