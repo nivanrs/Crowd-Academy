@@ -15,8 +15,11 @@ import Login from './components/Login/Login'
 import Footer from './components/Footer/Footer'
 import Register from './components/Register/Register'
 import KursusSaya from './components/KursusSaya/KursusSaya'
+
 import Course from './screen/CoursePage/CoursePage'
 import Class from './screen/ClassPage/ClassPage.jsx'
+import ArticlePageList from './screen/ArticlePageList/ArticlePageList'
+import ArticlePage from './screen/ArticlePage/ArticlePage'
 
 const App = () => {
   const userLogin = useSelector((state) => state.userLogin)
@@ -31,6 +34,13 @@ const App = () => {
         <Route exact path='/login' component={Login}></Route>
         <Route exact path='/course-page' component={Course}></Route>
         <Route exact path='/class-page' component={Class}></Route>
+        <Route
+          exact
+          path='/article-page-list'
+          component={ArticlePageList}
+        ></Route>
+        <Route exact path='/article-page' component={ArticlePage}></Route>
+
         <Route exact path='/'>
           {!!token ? <Redirect to='/course' /> : <Redirect to='/login' />}
           <Main />

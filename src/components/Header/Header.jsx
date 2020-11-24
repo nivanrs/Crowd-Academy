@@ -46,7 +46,7 @@ const Header = () => {
         <Navbar.Toggle aria-controls='basic-navbar-nav' />
         <Navbar.Collapse id='basic-navbar-nav'>
           <Nav className='mr-auto'>
-            <Nav.Link href='/article' style={{ color: '#000000' }}>
+            <Nav.Link href='/article-page-list' style={{ color: '#000000' }}>
               Artikel
             </Nav.Link>
             <NavDropdown title='Tren' style={{ color: '#FFFFFF' }}>
