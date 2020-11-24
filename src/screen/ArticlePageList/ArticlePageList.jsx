@@ -9,7 +9,7 @@ export default function ArticlePageList(props) {
     <Container>
       <h1>Artikel</h1>
       <CardDeck>
-        <Card>
+        <Card href='/article-page'>
           <Card.Img className='rounded mb-0' variant='top' src={invest} />
           <Card.Body>
             <Card.Title>Investasi untuk Pemula</Card.Title>
