@@ -61,7 +61,7 @@ const Register = ({ history }) => {
   return (
     <Container style={{display: 'flex', justifyContent: 'center'}}>
         <Card className="my-4" border="info" style={{ width: '30rem' }}>
-            <Card.Header className="text-center" style={{background: "#3498DB", color: "#FFFFFF"}}>Masuk</Card.Header>
+            <Card.Header className="text-center" style={{background: "#3498DB", color: "#FFFFFF"}}>Daftar</Card.Header>
             <Card.Body>
                 <Form onSubmit={submitHandler} className="form">
                     <Form.Group controlId="FirstName" className="form-group">

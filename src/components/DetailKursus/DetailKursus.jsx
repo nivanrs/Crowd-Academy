@@ -1,7 +1,9 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory, useParams } from "react-router-dom";
-import { Card, CardDeck, Jumbotron, Button } from "react-bootstrap";
+import { Card, CardDeck, Jumbotron, Button, Alert } from "react-bootstrap";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faClipboardCheck, faExclamationTriangle } from "@fortawesome/free-solid-svg-icons";
 import { GetCourseDetail, EnrollCourse } from "../../actions/menuActions";
 import Swal from "sweetalert2";
 import withReactContent from "sweetalert2-react-content";
@@ -56,28 +58,34 @@ const DetailKursus = () => {
 
   return (
     <div>
-    <Jumbotron className="mx-4 my-4 px-4 py-4">
-        <CardDeck>
+    <Jumbotron style={{display: 'flex', justifyContent: 'center'}} className="mx-4 my-4 px-4 py-4">
+      <CardDeck>
+        {detailcourses.length > 0 ? (
+          detailcourses.map((product) => (
             <React.Fragment>
-                <Card>
-                    <Card.Header>
-                        <Card.Title>
-                            {detailcourses.NamaKursus}
-                        </Card.Title>
-                    </Card.Header>
-                    <Card.Body>
-                        <Card.Text>{detailcourses.IDTopik}</Card.Text>
-                        <Card.Text>{detailcourses.FiturKursus}</Card.Text>
-                        <Card.Text>{detailcourses.DeskripsiKursus}</Card.Text>
-                    </Card.Body>
-                    <Card.Footer>
-                        <Button variant="success" type="submit" onClick={() => enrollHandler(detailcourses._id)}>
-                            Ikuti
-                        </Button>
-                    </Card.Footer>
-                </Card>
+              <Card key={product._id}>
+                <Card.Body>
+                  <Card.Title>{product.NamaKursus}</Card.Title>
+                  {product.topic.map((course) => (
+                    <Card.Text>{course.NamaTopik}</Card.Text>
+                  ))}
+                  <Card.Text>{product.FiturKursus}</Card.Text>
+                  <Card.Text>{product.DeskripsiKursus}</Card.Text>
+                </Card.Body>
+                <Card.Footer>
+                  <Button variant="success" type="submit" onClick={() => enrollHandler(product._id)}>
+                    <FontAwesomeIcon icon={faClipboardCheck} /> Ikuti
+                  </Button>
+                </Card.Footer>
+              </Card>
             </React.Fragment>
-        </CardDeck>
+          ))
+        ) : (
+          <Alert variant="primary">
+            <FontAwesomeIcon icon={faExclamationTriangle} /> Data Kursus Tidak Tersedia!
+          </Alert>
+        )}
+      </CardDeck>
     </Jumbotron>
     </div>
   );

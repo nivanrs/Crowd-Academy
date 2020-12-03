@@ -1,8 +1,10 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
-import { Card, CardDeck, Jumbotron, Button, ButtonGroup } from "react-bootstrap";
+import { Card, CardDeck, Jumbotron, Button, ButtonGroup, Alert } from "react-bootstrap";
 import { LinkContainer } from "react-router-bootstrap";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faClipboardCheck, faInfoCircle, faExclamationTriangle } from "@fortawesome/free-solid-svg-icons";
 import { GetCourse, EnrollCourse } from "../../actions/menuActions";
 import Swal from "sweetalert2";
 import withReactContent from "sweetalert2-react-content";
@@ -55,31 +57,39 @@ const KursusPilihan = () => {
 
   return (
     <div>
-      <Jumbotron className="px-4 py-4">
-        <CardDeck>
-          {courses.map((product) => (
-            <React.Fragment>
-              <Card key={product._id}>
-                <Card.Body>
-                  <Card.Title>{product.NamaKursus}</Card.Title>
-                  <Card.Text>{product.IDTopik}</Card.Text>
-                  <Card.Text>{product.FiturKursus}</Card.Text>
-                </Card.Body>
-                <Card.Footer>
-                  <ButtonGroup>
-                    <LinkContainer to={`/coursedetail/${product._id}`}>
-                      <Button variant="secondary" type="submit">
-                        Detail
+      <Jumbotron style={{display: 'flex', justifyContent: 'center'}} className="px-4 pt-3 pb-0">
+        <CardDeck className="mb-3">
+          {courses.length > 0 ? (
+            courses.map((product) => (
+              <React.Fragment>
+                <Card key={product._id}>
+                  <Card.Body>
+                    <Card.Title>{product.NamaKursus}</Card.Title>
+                    {product.coursetopic.map((topic) => (
+                      <Card.Text>{topic.NamaTopik}</Card.Text>
+                    ))}
+                    <Card.Text>{product.FiturKursus}</Card.Text>
+                  </Card.Body>
+                  <Card.Footer>
+                    <ButtonGroup style={{display: 'flex', alignItems: 'center'}}>
+                      <Button variant="success" type="submit" onClick={() => enrollHandler(product._id)}>
+                        <FontAwesomeIcon icon={faClipboardCheck} /> Ikuti
                       </Button>
-                    </LinkContainer>
-                    <Button variant="success" type="submit" onClick={() => enrollHandler(product._id)}>
-                      Ikuti
-                    </Button>
-                  </ButtonGroup>
-                </Card.Footer>
-              </Card>
-            </React.Fragment>
-          ))}
+                      <LinkContainer to={`/coursedetail/${product._id}`}>
+                        <Button variant="secondary" type="submit">
+                          <FontAwesomeIcon icon={faInfoCircle} /> Detail
+                        </Button>
+                      </LinkContainer>
+                    </ButtonGroup>
+                  </Card.Footer>
+                </Card>
+              </React.Fragment>
+            ))
+          ) : (
+            <Alert variant="primary">
+              <FontAwesomeIcon icon={faExclamationTriangle} /> Tidak Ada Data Kursus!
+            </Alert>
+          )}
         </CardDeck>
       </Jumbotron>
     </div>

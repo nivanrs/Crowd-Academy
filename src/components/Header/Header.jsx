@@ -1,6 +1,6 @@
-import React from 'react'
-import { useHistory } from 'react-router-dom'
-import { useDispatch } from 'react-redux'
+import React from "react";
+import { useHistory } from "react-router-dom";
+import { useDispatch } from "react-redux";
 import {
   Navbar,
   NavDropdown,
@@ -9,10 +9,12 @@ import {
   Form,
   Button,
   Image,
-} from 'react-bootstrap'
-import 'bootstrap/dist/css/bootstrap.min.css'
-import icon from '../../assets/icon.png'
-import { logout } from '../../actions/userActions'
+} from "react-bootstrap";
+import "bootstrap/dist/css/bootstrap.min.css";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faSignInAlt, faUserEdit } from "@fortawesome/free-solid-svg-icons";
+import icon from "../../assets/icon.png";
+import { logout } from "../../actions/userActions";
 
 const Header = () => {
   let history = useHistory()
@@ -121,16 +123,14 @@ const Header = () => {
               <Nav.Link
                 href='/login'
                 style={{ color: '#1A73A3' }}
-                className='mr-sm-2'
               >
-                Masuk
+                <FontAwesomeIcon icon={faSignInAlt} /> Masuk
               </Nav.Link>
               <Nav.Link
                 href='/register'
                 style={{ color: '#1A73A3' }}
-                className='mr-sm-2'
               >
-                Daftar
+                <FontAwesomeIcon icon={faUserEdit} /> Daftar
               </Nav.Link>
             </>
           )}

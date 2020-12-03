@@ -1,4 +1,7 @@
 import React from "react";
+//import ReactDOM from "react-dom";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faUserEdit } from "@fortawesome/free-solid-svg-icons";
 import { Col, Jumbotron } from "react-bootstrap";
 import { Container } from "react-bootstrap";
 import { Button } from "react-bootstrap";
@@ -16,7 +19,7 @@ export default class Banner extends React.Component {
           <h2>Dunia Perbankan yang seru menunggu anda</h2>
           <br></br>
           <Button variant="primary" href='/register' type="submit">
-            Daftar
+          <FontAwesomeIcon icon={faUserEdit} /> Daftar
           </Button>
           </Col>
           <Col>
